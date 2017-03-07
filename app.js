@@ -50,5 +50,20 @@ app.get('/api/users/:id', (req, res) => {
 	})
 });
 
+app.post('/api/users', (req, res) => {
+	let newUser = {
+		name: req.body.name,
+		surname: req.body.surname
+	};
+
+	connection.query("INSERT INTO users SET ?", user, (error, result, fields) => {
+		if (error) {
+			res.status(400).send(error.message);
+		}
+
+		res.status(200).send(result);
+	});
+});
+
 
 app.listen(3000);
