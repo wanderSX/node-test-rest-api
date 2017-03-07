@@ -36,4 +36,19 @@ app.get('/api/users', (req, res) => {
 
 });
 
+app.get('/api/users/:id', (req, res) => {
+	let userId = req.params.id;
+	
+	connection.query("SELECT * FROM users WHERE id = ?", [userId], (error, result, fields) => {
+		if (error) {
+			res.status(400).json({
+				message: error.message
+			});
+		}
+
+		res.status(200).send(result);
+	})
+});
+
+
 app.listen(3000);
