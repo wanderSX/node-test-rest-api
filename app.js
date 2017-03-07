@@ -30,7 +30,7 @@ app.get('/api/users', (req, res) => {
 				message: error.message
 			});
 		}
-
+		
 		res.send(result);
 	});
 
@@ -65,5 +65,17 @@ app.post('/api/users', (req, res) => {
 	});
 });
 
+app.put('/api/users/:id', (req, res) => {
+	let userId = req.params.id;
+	let newName = req.body.name;
+
+	connection.query("UPDATE users SET name = ? WHERE id = ?", [newName, userId], (error, result, fields) => {
+		if (error) {
+			res.status(400).send(error.message);
+		}
+
+		res.status(200).send(result);
+	});
+});
 
 app.listen(3000);
